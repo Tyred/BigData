@@ -51,7 +51,7 @@ The following tables summarizes the datasets used in training and evaluation pro
 | AP9 | FordA                                                  | FordB                     | 500
 | AP10| UWaveGestureLibraryX + UWaveGestureLibraryY            | UWaveGestureLibraryZ      | 315
 
-###### For the next experiments, the series length will always be 1024.
+##### For the next experiments, the series length will always be 1024.
 ```bash
 python3 CAE_1D.py -d FoG -e similarity_search
 ```
@@ -77,8 +77,6 @@ For this experiment, we use queries to perform the similarity search evaluation.
 | MP4  | mHealth    |
 
 Finally, for this last experiment, we use motif discovery to evaluate the Matrix Profile generated. 
-
-The train will generate a model into the ./data/<experiment_name>/<dataset_name>/new_train folder. 
 
 ##### Reminder: It is expected that you have already read the [paper](./paper.pdf) to further understanding the training process. 
 
@@ -123,7 +121,6 @@ Once you run the command above, the code will calculate all pairwise distances o
 | AP10| 1.63              | 0.28               | 5.89     |     0.90    |
 
 The CAE shows a trend that the longer the time needed to calculate the distances between the time series, the greater the advantage of using the autoencoder as a speedup tool. The Pearson correlation values shows that the coded data is pretty much related to the original data, that is, even though the code data is at least 8 times smaller, it is a good representation of the original data, in most cases.
-The figure below 
 
 ## Similarity Search
 First you need to compile the UCR_USP_Suite.cpp code, you can do that by running the make command:
@@ -134,7 +131,7 @@ Now, you you can just run:
 ```bash
 make <dataset_name>
 ``` 
-That will run perform the similarity search with each coded and original query, with the coded and original data, respectively. Basically, we run the similarity search using a original query looking for its nearest neighbor in the original serie, for each query, then we repeat the process for each coded query in the coded data. The following table summarizes the speedup obtained.  
+That will perform the similarity search with each coded and original query, with the coded and original data, respectively. Basically, we run the similarity search using a original query looking for its nearest neighbor in the original serie, for each query, then we repeat the process for each coded query in the coded data. The following table summarizes the speedup obtained.  
 
 | ID | Runtime (original) |  Runtime (coded)   |  Speedup |
 |---- |------------------ | ------             | ---------|
@@ -162,10 +159,10 @@ This code generates the Matrix Profile (MP) of the original and coded data of th
 | MP3 | 2174.84           | 26.19              |  83.04   |
 | MP4 | 18285.62          | 181.26             |  100.88  |
 
-As you can see, the speed up ratio is up to 100. The results of this experiment are really promising because there were cases that the best motif pair are the same for the coded and original data, that is, in such cases, there was no performance loss at all. The two last figures presents one of the cases that it happened (MP2 - PAMAP2). Note that the motif pair is the same in the two images and the coded one was 76.54 times faster.
+As you can see, the speed up ratio is up to 100. The results of this experiment are really promising because there were cases that the best motif pair are the same for the coded and original data, that is, in such cases, there was no performance loss at all. The two last figures presents one of the cases that it happened (MP2 - PAMAP2). Note that the motif pair is the same in the two images and MP calculation using the coded one was 76.54 times faster.
 
 ![Query1](results/matrix_profile/PAMAP2/PAMAP2_best_motifs.png)
 ![Query1](results/matrix_profile/PAMAP2/PAMAP2_coded_best_motifs.png)
 
 ## Conclusion
-We proposed an approach based on convolutional autoencoders, which is orthogonal to state-of-the-art techniques in time series mining. We have shown empirically that the use of CAE consistently improves the efficiency of these methods.Besides, we noticed that the greater the difficulty of these techniques in improving the execution time, the greater our proposal’s benefit. Since the dimensionality reduction can cause distortions inthe obtained results, we also evaluate relative distances’ preservation. In some cases, unfortunately, we notice significant distortions. However, these cases are exceptions and they areassociated with little data for training and notable differences in complexity between time series.
+We proposed an approach based on convolutional autoencoders, which is orthogonal to state-of-the-art techniques in time series mining. We have shown empirically that the use of CAE consistently improves the efficiency of these methods.Besides, we noticed that the greater the difficulty of these techniques in improving the execution time, the greater our proposal’s benefit. Since the dimensionality reduction can cause distortions inthe obtained results, we also evaluate relative distances’ preservation. In some cases, unfortunately, we notice significant distortions. However, these cases are exceptions and they area ssociated with little data for training and notable differences in complexity between time series.
