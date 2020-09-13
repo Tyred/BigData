@@ -8,76 +8,80 @@ import tensorflow as tf
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 import pandas as pd
 
-import timeit
+import sys
+import argparse
 
 # Constants 
-query_length = 1024
 batch_size = 16
 epochs = 50
-dataset_name = input("Dataset name: ")
-experiment = input("Which experiment? One of pairwise_distance, similarity_search or matrix_profile ")
-file_train = '../Data/{0}/{1}/{1}_train.txt'.format(experiment, dataset_name)
 
 # Window Function
 def window(data, window_size):  # With overlay
-    windowed_data = []
-    i = 0
+	windowed_data = []
+	i = 0
 
-    while(i + window_size-1 < len(data)):
-        windowed_data.append(data[i:(i+window_size)])
-        i += window_size//2
+	while(i + window_size-1 < len(data)):
+		windowed_data.append(data[i:(i+window_size)])
+		i += window_size//2
 
-    if((i - (window_size//2) + window_size-1) != len(data)):
-        i = len(data) - window_size
-        windowed_data.append(data[i:len(data)]) # add the rest
+	if((i - (window_size//2) + window_size-1) != len(data)):
+		i = len(data) - window_size
+		windowed_data.append(data[i:len(data)]) # add the rest
 
-    return windowed_data 
+	return windowed_data 
 
-def windowNoOverlay(data, window_size):  # Without overlay
-    windowed_data = []
-    i = 0
+def parser_args(cmd_args):
 
-    while(i + window_size-1 < len(data)):
-        windowed_data.append(data[i:(i+window_size)])
-        i += window_size
+	parser = argparse.ArgumentParser(sys.argv[0], description="", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+	parser.add_argument("-e", "--exp", type=str, action="store", default="pairwise_distances", help="Experiment")
+	parser.add_argument("-d", "--dataset", type=str, action="store", default="PigArtPressure", help="Dataset name")
 
-    if (i != len(data)):
-        i = len(data) - window_size
-        windowed_data.append(data[i:len(data)]) # add the rest
+	return parser.parse_args(cmd_args)
 
-    return windowed_data
+# obtaining arguments from command line
+args = parser_args(sys.argv[1:])
 
-data = np.genfromtxt(file_train, delimiter='\n',)
-print("Data shape:", data.shape)
+dataset = args.dataset
+exp = args.exp
 
-# Getting rid of the NaNs and infs
-data = np.array(pd.Series(data).interpolate())
+if (exp == "pairwise_distances"):
+	data = np.genfromtxt('../data/' + exp + '/' + dataset + '.txt', delimiter=' ',)
+	print("Data shape:", data.shape)
+elif (exp == "similarity_search"):
+	data = np.genfromtxt('../data/' + exp + '/' + dataset + '/' + 'Data.txt', delimiter=' ',)
+	print("Data shape:", data.shape)	
 
-# 'Windowing' 
-data = np.array(window(data, query_length))
-print("Window Data shape:", data.shape)
+else:
+	data = np.genfromtxt('../data/' + exp + '/' + dataset + '/' + dataset + '_train.txt', delimiter=' ',)
+	print("Data shape:", data.shape)
+
+# Getting rid of the NaNs and infs with interpolation
+if (len(data.shape) == 1):
+	data = np.array(pd.Series(data).interpolate())
+	serie_length = 1024
+
+	# 'Windowing' 
+	data = np.array(window(data, serie_length))
+	print("Window Data shape:", data.shape)
+else:
+	serie_length = data.shape[1]
+	print("Serie length:", serie_length)
 
 # Reshaping
-data.shape = data.shape[0], query_length, 1
+data.shape = data.shape[0], serie_length, 1
 print("Final Data shape:", data.shape)
 
-# Stacked Autoencoder
-class Swish(Activation):
-    def __init__(self, activation, **kwargs):
-        super(Swish, self).__init__(activation, **kwargs)
-        self.__name__ = 'swish'
+# Swish Activation
+def swish(x, beta = 1):
+    return (x * K.sigmoid(beta * x))
 
-def swish(x):
-    return (K.sigmoid(x) * x)
+get_custom_objects().update({'Swish': Activation(swish)})
 
-get_custom_objects().update({'swish': Swish(swish)})
-
-
-input_data = Input(shape=(query_length, 1))
-#x = ZeroPadding1D(2)(input_data) # If the input series length isn't multiple of 8
+# Convolutional Autoencoder
+input_data = Input(shape=(serie_length, 1))
+#x = ZeroPadding1D(2)(input_data) # If the input series length isn't multiple of 8 uncomment this
 x = Conv1D(16, (3), activation='swish', padding='same')(input_data)
 x = MaxPooling1D((2), padding='same')(x)
 x = Conv1D(8, (3), activation='swish', padding='same')(x)
@@ -92,7 +96,7 @@ x = UpSampling1D((2))(x)
 x = Conv1D(16, (3), activation='swish', padding='same')(x)
 x = UpSampling1D((2))(x)
 decoded = Conv1D(1, (3), activation='swish', padding='same')(x)
-#decoded = Cropping1D(cropping=(2,2))(decoded)# If the input series length isn't multiple of 8
+#decoded = Cropping1D(cropping=(2,2))(decoded)# If the input series length isn't multiple of 8 uncomment this
 encoder = Model(input_data, encoded)
 encoder.summary()
 
@@ -104,8 +108,7 @@ callback = keras.callbacks.EarlyStopping(monitor='loss', patience=2)
 
 history = autoencoder.fit(data, data, epochs= epochs, batch_size= batch_size, callbacks = [callback])
 
-autoencoder.save('../models/' + experiment + '/' + dataset_name + '/autoencoder_{}.h5'.format(dataset_name))
-encoder.save('../models/' + experiment + '/' + dataset_name + '/encoder_{}.h5'.format(dataset_name))
+encoder.save('../models/' + exp + '/' + '/new_train/encoder_{}.h5'.format(dataset))
 
 
 # Plot the loss by epoch
@@ -115,5 +118,4 @@ plt.plot(epoch_count, training_loss, 'r--')
 plt.legend(['Training Loss'])
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
-plt.savefig('../models/' + experiment + '/' + dataset_name +  '/{}_trainLoss.png'.format(dataset_name))
 plt.show()
