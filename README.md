@@ -32,7 +32,6 @@ The code expects 2 arguments: -d for dataset and -e for experiment (one of pairw
 The generated models will be save in the /models/<experiment\>/new_train folder.
 Example:
 ```bash
-cd src/
 python3 CAE_1D.py -d PigArtPressure -e pairwise_distances
 ```
 Our train example above will train for the AP1 experiment, as shown below.
