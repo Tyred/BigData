@@ -1,6 +1,6 @@
 # On Convolutional Autoencoders to Speed Up Similarity-Based Time Series Mining
 
-This repository is the official implementation of [On Convolutional Autoencoders to Speed Up Similarity-Based Time Series Mining](./paper.pdf). It contains code, data and results. Enjoy :D 
+This repository is the official implementation of [On Convolutional Autoencoders to Speed Up Similarity-Based Time Series Mining](./paper.pdf). It contains code, data and results. Enjoy :smile:
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -13,7 +13,7 @@ pip3 install -r requirements.txt
 
 If you want to use the pre-trained models to reproduce the results or just see the results, skip to [Evaluation and Results](#evaluation-and-results) section. 
 
-If you want to train the neural network for this work purposes, you will need to download the following datasets. You can still train and evaluate on other datasets, let me know if you do. ;)
+If you want to train the neural network for this work purposes, you will need to download the following datasets. You can still train and evaluate on other datasets, let me know if you do. :wink:
 
 - [Datasets for the pairwise distances experiment](https://drive.google.com/drive/folders/1l9Io9RosXaBf8oR_NLdzqwaFRxMpC_Rm?usp=sharing)
 - [Datasets for the similarity search experiment](https://drive.google.com/drive/folders/1wVry8omFpkVlkP4h2D9Jjr86iOTec8KU?usp=sharing)
