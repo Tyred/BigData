@@ -76,9 +76,9 @@ For this experiment, we use queries to perform the subsequence similarity search
 | MP3  | ZXY-Soccer |                
 | MP4  | mHealth    |
 
-Finally, for this last experiment, we use motif discovery to evaluate the Matrix Profile generated. 
+Finally, for this last experiment, we use motif discovery to evaluate the generated Matrix Profile. 
 
-##### Reminder: It is expected that you have already read the [paper](./paper.pdf) to further understanding the training process. 
+##### Reminder: It is expected that you have already read the [paper](./paper.pdf) to further understanding the proposed tasks and the training/evaluation process. 
 
 # Evaluation and Results
 
