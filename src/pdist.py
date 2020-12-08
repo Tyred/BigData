@@ -30,7 +30,7 @@ def pairwise_dist(data):
 
 	stop = timeit.default_timer()
 
-	print("Time to calculate all paiwise distances: ", stop - start)
+	print("Time to calculate all pairwise distances: ", stop - start)
 
 	#np.save("drive/My Drive/UFSCar/FAPESP/IC/Results/Task_1/" + "pdist_" + dataset_name + "_raw.npy", dist_m)
 
