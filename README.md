@@ -127,11 +127,11 @@ First you need to compile the UCR_USP_Suite.cpp code, you can do that by running
 ```bash
 make
 ```
-Now, you you can just run:
+Now, you can just run:
 ```bash
 make <dataset_name>
 ``` 
-That will perform the similarity search with each coded and original query, with the coded and original data, respectively. Basically, we run the similarity search using a original query looking for its nearest neighbor in the original serie, for each query, then we repeat the process for each coded query in the coded data. The following table summarizes the speedup obtained.  
+This will perform the similarity search with each coded and original query, with the coded and original data, respectively. Basically, we run the similarity search using a original query looking for its nearest neighbor in the original serie, for each query, then we repeat the process for each coded query in the coded data. The following table summarizes the speedup obtained.  
 
 | ID | Runtime (original) |  Runtime (coded)   |  Speedup |
 |---- |------------------ | ------             | ---------|
