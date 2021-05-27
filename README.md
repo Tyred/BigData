@@ -1,6 +1,6 @@
 # On Convolutional Autoencoders to Speed Up Similarity-Based Time Series Mining
 
-This repository is the official implementation of [On Convolutional Autoencoders to Speed Up Similarity-Based Time Series Mining](./paper.pdf). It contains code, data and results. Enjoy :smile:
+This repository is the official implementation of [On Convolutional Autoencoders to Speed Up Similarity-Based Time Series Mining](https://ieeexplore.ieee.org/document/9377999). It contains code, data and results. Enjoy :smile:
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -142,7 +142,7 @@ This will perform the similarity search with each coded and original query, with
 | SS5 | 77.48             | 4.25               | 18.32    |
 | SS6 | 4272.84           | 369.54             | 11.20    |
 
-In this case, the more the coded representation can avoid the DTW calculation, the greater the speedup. Take SS1 for example, for the first query of this dataset, it was necessary to calculate the DTW distance for 58.93% of the substrings. When we search in the reduced time series domain, that value changes to 20.29%. The image below shows an example of how close the NN's (nearest neighbors) are, that is, the reduced representation does a great job and much faster than the original data.  
+In this case, the more the coded representation can prune unpromising warping alignments in the DTW calculation, the greater the speedup. Take SS1 for example, for the first query of this dataset, it was necessary to calculate the DTW distance for 58.93% of the substrings. When we search in the reduced time series domain, that value changes to 20.29%. The image below shows an example of how close the NN's (nearest neighbors) are, that is, the reduced representation does a great job and much faster than the original data.  
 ![Query1](results/similarity_search/FoG/Query1.png)
 
 ## Matrix Profile
