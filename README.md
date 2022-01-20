@@ -78,7 +78,7 @@ For this experiment, we use queries to perform the subsequence similarity search
 
 Finally, for this last experiment, we use motif discovery to evaluate the generated Matrix Profile. 
 
-##### Reminder: It is expected that you have already read the [paper](./paper.pdf) to further understanding the proposed tasks and the training/evaluation process. 
+##### Reminder: It is expected that you have already read the [paper](https://ieeexplore.ieee.org/document/9377999) to further understanding the proposed tasks and the training/evaluation process. 
 
 # Evaluation and Results
 
