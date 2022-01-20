@@ -29,7 +29,7 @@ cd src/
 python3 CAE_1D.py -d <dataset> -e <experiment>
 ```
 The code expects 2 arguments: -d for dataset and -e for experiment (one of pairwise_distances, similarity_search or matrix_profile).
-The generated models will be save in the /models/<experiment\>/new_train folder.
+The generated models will be save in the `models/<experiment\>/new_train` folder.
 Example:
 ```bash
 python3 CAE_1D.py -d PigArtPressure -e pairwise_distances
@@ -89,11 +89,11 @@ To evaluate the model, we need the coded datasets. After all, our proposal relie
 ```bash
 python3 encoder.py -d <dataset_name> -e <experiment>
 ``` 
-This code uses the models that you have trained to encode the dataset. In the Similarity Search task, the encoder will encode the queries as well. Either way, save the coded data in ./data/<experiment\>/coded_data folder.
+This code uses the models that you have trained to encode the dataset. In the Similarity Search task, the encoder will encode the queries as well. Either way, save the coded data in `data/<experiment\>/coded_data` folder.
 
 ### Pairwise Distances
 
-In order to evaluate the model in this task. Make sure that you are in the ./src directory and run this command:
+In order to evaluate the model in this task. Make sure that you are in the `src` directory and run this command:
 
 ```bash
 python3 pdist.py -d <dataset> -m <model>
