@@ -87,7 +87,7 @@ Finally, for this last experiment, we use motif discovery to evaluate the genera
 To evaluate the model, we need the coded datasets. After all, our proposal relies on that. The datasets listed [above](#requirements) have all the coded data ready to use, but if you have trained the model and want to encode the data yourself, you may use this code as shown below:
 
 ```bash
-python3 encoder.py -d <dataset_name> -e <experiment>
+python3 encoder.py -d <dataset> -e <experiment>
 ``` 
 This code uses the models that you have trained to encode the dataset. In the Similarity Search task, the encoder will encode the queries as well. Either way, save the coded data in `data/<experiment>/coded_data` folder.
 
@@ -129,7 +129,7 @@ make
 ```
 Now, you can just run:
 ```bash
-make <dataset_name>
+make <dataset>
 ``` 
 This will perform the similarity search with each coded and original query, with the coded and original data, respectively. Basically, we run the similarity search using a original query looking for its nearest neighbor in the original serie, for each query, then we repeat the process for each coded query in the coded data. The following table summarizes the speedup obtained.  
 
@@ -148,9 +148,9 @@ In this case, the more the coded representation can prune unpromising warping al
 ## Matrix Profile
 Finally, to evaluate the last experiment, you need to run the following command:
 ```bash
-python3 mp_znorm_np.npy <dataset_name>
+python3 mp_znorm_np.npy <dataset>
 ```
-This code generates the Matrix Profile (MP) of the original and coded data of the dataset <dataset_name> and shows the time needed to calculate each. Then it will show the Motif value and index for each MP. With this information, we plot these Motifs to see if they look alike, all the plots are available in the results folder. The subsequent table features the speedup achieved in this experiment.
+This code generates the Matrix Profile (MP) of the original and coded data of the given dataset and shows the time needed to calculate each. Then it will show the Motif value and index for each MP. With this information, we plot these Motifs to see if they look alike, all the plots are available in the results folder. The subsequent table features the speedup achieved in this experiment.
 
 | ID | Runtime (original) |  Runtime (coded)   |  Speedup |
 |---- |------------------ | ------             | ---------|
